@@ -3,7 +3,8 @@ use std::io::{BufRead, BufReader, Error, ErrorKind, Read};
 
 pub fn count_increment() {
     println!("This should count the number of times we see increments.");
-    if let Ok(_) = main() {}
+    if let Ok(_) = count_single_increment() {}
+    if let Ok(_) = count_three_step_increment() {}
 }
 
 fn read<R: Read>(io: R) -> Result<Vec<i64>, Error> {
@@ -13,7 +14,7 @@ fn read<R: Read>(io: R) -> Result<Vec<i64>, Error> {
         .collect()
 }
 
-fn main() -> Result<(), Error> {
+fn count_single_increment() -> Result<(), Error> {
     let vec = read(File::open("./src/day1/input.txt")?)?;
     let mut i = 0;
     let mut c = 0;
@@ -27,6 +28,32 @@ fn main() -> Result<(), Error> {
         i += 1;
         prev = v
     }
-    println!("{}", c);
+    println!("Single step increments: {}", c);
+    Ok(())
+}
+
+fn count_three_step_increment() -> Result<(), Error> {
+    let vec = read(File::open("./src/day1/input.txt")?)?;
+    let mut i = 0;
+    let mut p1 = 0;
+    let mut p2 = 0;
+    let mut p3 = 0;
+    let mut d = 0;
+    for v in vec {
+        if i > 2 {
+            let a = [p3, p2, p1];
+            let b = [p2, p1, v];
+            let sum_a: i64 = a.iter().sum();
+            let sum_b: i64 = b.iter().sum();
+            if sum_b > sum_a {
+                d += 1
+            }
+        }
+        p3 = p2;
+        p2 = p1;
+        p1 = v;
+        i += 1;
+    }
+    println!("Three step increments: {}", d);
     Ok(())
 }
