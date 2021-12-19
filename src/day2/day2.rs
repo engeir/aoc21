@@ -21,3 +21,28 @@ pub fn track_position() {
     println!("Depth change: {}, Forward change: {}", dep, fwd);
     println!("Multiplied: {}", dep * fwd);
 }
+
+pub fn track_position_aim() {
+    let data = read("./src/day2/input.txt");
+    let mut aim = 0;
+    let mut dep = 0;
+    let mut fwd = 0;
+    for i in data.lines() {
+        let spl = i.split(" ").collect::<Vec<&str>>();
+        let val = spl[1].parse::<i32>().unwrap();
+        match spl[0] {
+            "forward" => {
+                fwd += val;
+                dep += val * aim;
+            }
+            "down" => aim += val,
+            "up" => aim -= val,
+            _ => panic!(),
+        }
+    }
+    println!(
+        "Depth change: {}, Forward change: {}, Aim change: {}",
+        dep, fwd, aim
+    );
+    println!("Multiplied: {}", dep * fwd);
+}
