@@ -1,6 +1,9 @@
 mod day1;
+mod day2;
 
 fn main() {
-    println!("Hello, world!");
+    println!("Day 1:");
     day1::day1::count_increment();
+    println!("Day 2:");
+    day2::day2::track_position();
 }

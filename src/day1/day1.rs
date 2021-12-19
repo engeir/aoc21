@@ -1,17 +1,16 @@
 use std::fs::File;
 use std::io::{BufRead, BufReader, Error, ErrorKind, Read};
 
-pub fn count_increment() {
-    println!("This should count the number of times we see increments.");
-    if let Ok(_) = count_single_increment() {}
-    if let Ok(_) = count_three_step_increment() {}
-}
-
 fn read<R: Read>(io: R) -> Result<Vec<i64>, Error> {
     let br = BufReader::new(io);
     br.lines()
         .map(|line| line.and_then(|v| v.parse().map_err(|e| Error::new(ErrorKind::InvalidData, e))))
         .collect()
+}
+
+pub fn count_increment() {
+    if let Ok(_) = count_single_increment() {}
+    if let Ok(_) = count_three_step_increment() {}
 }
 
 fn count_single_increment() -> Result<(), Error> {
