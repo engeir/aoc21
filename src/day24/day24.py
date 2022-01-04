@@ -15,26 +15,36 @@ def sort_inps():
         d[c].append(l_)
     return d
 
+def decrease_list(inps, idx):
+    down = inps[:idx + 1]
+    for i, v in enumerate(reversed(down)):
+        if v > 1:
+            down[len(down) - 1 - i] -= 1
+            idx = len(down) - 1 - i
+            down = down[:idx + 1]
+            break
+        # else:
+        #     print("v was already at 1")
+        if i == len(down) - 1:
+            sys.exit("Think this will not work, actually...")
+    rest = [9 for _ in inps[idx + 1:]]
+    # print(down + rest)
+    return down + rest
+
 def the_alu():
     inp_range = sort_inps()
     inps = [9 for _ in range(14)]
     while inps != [1 for _ in range(14)]:
-        if inps[1:] == [1 for _ in range(13)]:
-            inps[0] -= 1
-        print("new")
-        print(inps)
+        # if inps[1:] == [1 for _ in range(13)]:
+        #     inps[0] -= 1
+        # print("new")
+        # print(inps)
         d = {"w": 0, "x": 0, "y": 0, "z": 0}
         for idx, val in enumerate(inps):
             rules = inp_range[idx]
             d = evaluate_rules(rules, val, d)
             if d["z"] > 10**7:
-                print(1, inps[idx])
-                if inps[idx] > 1:
-                    inps[idx] -= 1
-                    break
-                elif inps[idx - 1] > 1:
-                    inps[idx - 1] -= 1
-                    break
+                inps = decrease_list(inps, idx)
     # for val in reversed(range(1, 10)):
     #     for idx in range(14):
     #         rules = inp_range[idx]
