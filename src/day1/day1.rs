@@ -1,6 +1,7 @@
 use std::fs::File;
 use std::io::{BufRead, BufReader, Error, ErrorKind, Read};
 
+/// Read a file and return a Vec of its lines
 fn read<R: Read>(io: R) -> Result<Vec<i64>, Error> {
     let br = BufReader::new(io);
     br.lines()
@@ -8,11 +9,13 @@ fn read<R: Read>(io: R) -> Result<Vec<i64>, Error> {
         .collect()
 }
 
+/// Run the two increment functions for day 1 of advent of code.
 pub fn count_increment() {
     if let Ok(_) = count_single_increment() {}
     if let Ok(_) = count_three_step_increment() {}
 }
 
+/// Counts the number of times a number is larger than the previous one.
 fn count_single_increment() -> Result<(), Error> {
     let vec = read(File::open("./src/day1/input.txt")?)?;
     let mut i = 0;
@@ -31,6 +34,7 @@ fn count_single_increment() -> Result<(), Error> {
     Ok(())
 }
 
+/// Counts the number of times three consecutive numbers are increasing.
 fn count_three_step_increment() -> Result<(), Error> {
     let vec = read(File::open("./src/day1/input.txt")?)?;
     let mut i = 0;

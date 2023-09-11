@@ -1,10 +1,12 @@
 use std::fs;
 
+/// Read a file and place its contents into a string
 fn read(io: &str) -> String {
     let br = format!("{}", io);
     fs::read_to_string(&br).unwrap_or_else(|_| panic!("Error reading file {}", br))
 }
 
+/// Sum the numbers related to equal strings
 pub fn track_position() {
     let data = read("./src/day2/input.txt");
     let mut dep = 0;
@@ -22,6 +24,7 @@ pub fn track_position() {
     println!("Multiplied: {}", dep * fwd);
 }
 
+/// Sum and scale the numbers related to equal strings
 pub fn track_position_aim() {
     let data = read("./src/day2/input.txt");
     let mut aim = 0;
